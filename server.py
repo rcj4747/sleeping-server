@@ -8,8 +8,7 @@ from os import environ
 from time import sleep
 
 hostName = environ.get("HOSTNAME", "0.0.0.0")
-serverPort = environ.get("PORT")
-serverPort = 8080 if not serverPort else int(serverPort)
+serverPort = int(environ.get("PORT", 8080))
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
@@ -22,9 +21,9 @@ class MyServer(BaseHTTPRequestHandler):
         self.wfile.write(bytes("</body></html>", "utf-8"))
 
 if __name__ == "__main__":
-    startTimeout = environ.get("START_TIMEOUT", 5)
-    serveTimeout = environ.get("SERVE_TIMEOUT", 30)
-    exitTimeout = environ.get("EXIT_TIMEOUT", 600)
+    startTimeout = int(environ.get("START_TIMEOUT", 5))
+    serveTimeout = int(environ.get("SERVE_TIMEOUT", 30))
+    exitTimeout = int(environ.get("EXIT_TIMEOUT", 600))
     print("SUMMARY:")
     print(f" - sleep {startTimeout}s \t\t\t START_TIMEOUT")
     print(f" - serve content for {serveTimeout}s \t SERVER_TIMEOUT")
